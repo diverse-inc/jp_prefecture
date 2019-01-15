@@ -185,7 +185,7 @@ func FindByKana(kana string) (Prefecture, bool) {
 }
 
 func FindByRoma(roma string) (Prefecture, bool) {
-	code, ok := nameFindMap["roma"][roma]
+	code, ok := nameFindMap["roma"][strings.ToLower(roma)]
 
 	if !ok {
 		return nil, false

@@ -97,6 +97,8 @@ func TestFindByRoma(t *testing.T) {
 	findValues := []string{
 		"hokkaido", "tokyo", "tokyo-to", "osaka", "osaka-fu",
 		"kyoto", "kyoto-fu", "okinawa", "okinawa-ken",
+
+		"Hokkaido", "TOKYO", "Tokyo-To", "oSAKA",
 	}
 
 	for _, value := range findValues {
