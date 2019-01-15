@@ -75,3 +75,28 @@ func TestFindByKana(t *testing.T) {
 		t.Fatal()
 	}
 }
+
+func TestFindByRoma(t *testing.T) {
+	findValues := []string{
+		"hokkaido", "tokyo", "tokyo-to", "osaka", "osaka-fu",
+		"kyoto", "kyoto-fu", "okinawa", "okinawa-ken",
+	}
+
+	for _, value := range findValues {
+		prefecture, ok := FindByRoma(value)
+		if !ok {
+			t.Fatal()
+		}
+		if prefecture == nil {
+			t.Fatal()
+		}
+	}
+
+	prefecture, ok := FindByRoma("tokyoto")
+	if ok {
+		t.Fatal()
+	}
+	if prefecture != nil {
+		t.Fatal()
+	}
+}
