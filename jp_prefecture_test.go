@@ -50,3 +50,28 @@ func TestFindByKanji(t *testing.T) {
 		t.Fatal()
 	}
 }
+
+func TestFindByKana(t *testing.T) {
+	findValues := []string{
+		"ほっかいどう", "とうきょう", "とうきょうと", "おおさか", "おおさかふ",
+		"きょうと", "きょうとふ", "おきなわ", "おきなわけん",
+	}
+
+	for _, value := range findValues {
+		prefecture, ok := FindByKana(value)
+		if !ok {
+			t.Fatal()
+		}
+		if prefecture == nil {
+			t.Fatal()
+		}
+	}
+
+	prefecture, ok := FindByKana("ほっかい")
+	if ok {
+		t.Fatal()
+	}
+	if prefecture != nil {
+		t.Fatal()
+	}
+}
