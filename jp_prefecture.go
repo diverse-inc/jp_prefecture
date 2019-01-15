@@ -51,3 +51,17 @@ var prefectureMap = map[int]Texts{
 	46: {"kanji": "鹿児島県", "kana": "かごしまけん", "roma": "kagoshima-ken"},
 	47: {"kanji": "沖縄県", "kana": "おきなわけん", "roma": "okinawa-ken"},
 }
+
+type prefecture struct {
+	Code int
+	Kanji string
+	Kana  string
+	Roma  string
+}
+
+type Prefecture interface {
+	Code() int
+	Kanji() string
+	Kana() string
+	Roma() string
+}
