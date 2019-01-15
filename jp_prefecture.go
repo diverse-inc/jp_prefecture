@@ -140,6 +140,17 @@ func (p *prefecture) Roma() string {
 	return p.roma
 }
 
+func List() []Prefecture {
+	var prefectures = make([]Prefecture, 47)
+
+	for code, texts := range prefectureMap {
+		prefecture := &prefecture{code, texts["kanji"], texts["kana"], texts["roma"]}
+		prefectures = append(prefectures, prefecture)
+	}
+
+	return prefectures
+}
+
 func FindByCode(code int) (Prefecture, bool) {
 	texts, ok := prefectureMap[code]
 
