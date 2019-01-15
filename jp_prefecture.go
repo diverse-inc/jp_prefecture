@@ -4,6 +4,7 @@ import (
 	"strings"
 )
 
+// prefectureMap は都道府県の情報を”コード：名称のMap（漢字、かな、ローマ字）”形式で定義した値です。
 var prefectureMap = map[int]map[string]string{
 	1:  {"kanji": "北海道", "kana": "ほっかいどう", "roma": "hokkaido"},
 	2:  {"kanji": "青森県", "kana": "あおもりけん", "roma": "aomori-ken"},
@@ -54,6 +55,7 @@ var prefectureMap = map[int]map[string]string{
 	47: {"kanji": "沖縄県", "kana": "おきなわけん", "roma": "okinawa-ken"},
 }
 
+// nameFindMap は漢字、かな、ローマ字で都道府県情報を検索しやすくするためのインデックスマップです。
 var nameFindMap = func() map[string]map[string]int {
 	findMap := map[string]map[string]int{
 		"kanji": make(map[string]int, 47),
@@ -108,6 +110,7 @@ var nameFindMap = func() map[string]map[string]int {
 	return findMap
 }()
 
+// prefecture は都道府県情報を定義する構造体です。
 type prefecture struct {
 	code  int
 	kanji string
@@ -115,6 +118,7 @@ type prefecture struct {
 	roma  string
 }
 
+// Prefecture は外部に公開するための都道府県インターフェースです。
 type Prefecture interface {
 	Code() int
 	Kanji() string
@@ -122,22 +126,27 @@ type Prefecture interface {
 	Roma() string
 }
 
+// Code は都道府県コードを返します。
 func (p *prefecture) Code() int {
 	return p.code
 }
 
+// Kanji は都道府県の漢字名を返します、末尾には「都」、「府」、「県」が付与された状態で値が返ります。
 func (p *prefecture) Kanji() string {
 	return p.kanji
 }
 
+// Kana は都道府県のかな名を返します、末尾には「と」、「ふ」、「けん」が付与された状態で値が返ります。
 func (p *prefecture) Kana() string {
 	return p.kana
 }
 
+// Roma は都道府県のローマ字名を返します、末尾には「-to」、「-fu」、「-ken」が付与された状態で値が返ります。
 func (p *prefecture) Roma() string {
 	return p.roma
 }
 
+// List は全ての都道府県情報を返します。
 func List() []Prefecture {
 	var prefectures = make([]Prefecture, 47)
 
@@ -149,6 +158,8 @@ func List() []Prefecture {
 	return prefectures
 }
 
+// FindByCode は与えた都道府県コードに対応する都道府県情報を返します。
+// 対応する都道府県情報が見つからない場合、`ok`に`false`が設定され、都道府県情報は`nil`で返されます。
 func FindByCode(code int) (Prefecture, bool) {
 	texts, ok := prefectureMap[code]
 
@@ -160,6 +171,9 @@ func FindByCode(code int) (Prefecture, bool) {
 	return prefecture, true
 }
 
+// FindByKanji は与えた都道府県の漢字名に対応する都道府県情報を返します。
+// 与える値の末尾にある「都」、「府」、「県」は省略可能です。
+// 対応する都道府県情報が見つからない場合、`ok`に`false`が設定され、都道府県情報は`nil`で返されます。
 func FindByKanji(kanji string) (Prefecture, bool) {
 	code, ok := nameFindMap["kanji"][kanji]
 
@@ -172,6 +186,9 @@ func FindByKanji(kanji string) (Prefecture, bool) {
 	return prefecture, true
 }
 
+// FindByKana は与えた都道府県のかな名に対応する都道府県情報を返します。
+// 与える値の末尾にある「と」、「ふ」、「けん」は省略可能です。
+// 対応する都道府県情報が見つからない場合、`ok`に`false`が設定され、都道府県情報は`nil`で返されます。
 func FindByKana(kana string) (Prefecture, bool) {
 	code, ok := nameFindMap["kana"][kana]
 
@@ -184,6 +201,10 @@ func FindByKana(kana string) (Prefecture, bool) {
 	return prefecture, true
 }
 
+// FindByRoma は与えた都道府県のローマ字名に対応する都道府県情報を返します。
+// 与える値の末尾にある「-to」、「-fu」、「-ken」は省略可能です。
+// 与える値はUpperCamelCase、LowerCamelCaseを問いません。
+// 対応する都道府県情報が見つからない場合、`ok`に`false`が設定され、都道府県情報は`nil`で返されます。
 func FindByRoma(roma string) (Prefecture, bool) {
 	code, ok := nameFindMap["roma"][strings.ToLower(roma)]
 
