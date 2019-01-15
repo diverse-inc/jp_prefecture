@@ -4,6 +4,23 @@ import (
 	"testing"
 )
 
+func TestList(t *testing.T) {
+	list := List()
+
+	if len(list) != 47 {
+		t.Fatal()
+	}
+
+	for i, prefecture := range list {
+		if prefecture == nil {
+			t.Fatal()
+		}
+		if prefecture.Code() != i+1 {
+			t.Fatal()
+		}
+	}
+}
+
 func TestFindByCode(t *testing.T) {
 	var (
 		prefecture Prefecture
