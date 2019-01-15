@@ -53,10 +53,10 @@ var prefectureMap = map[int]Texts{
 }
 
 type prefecture struct {
-	Code int
-	Kanji string
-	Kana  string
-	Roma  string
+	code int
+	kanji string
+	kana  string
+	roma  string
 }
 
 type Prefecture interface {
@@ -64,4 +64,20 @@ type Prefecture interface {
 	Kanji() string
 	Kana() string
 	Roma() string
+}
+
+func (p *prefecture) Code() int {
+	return p.code
+}
+
+func (p *prefecture) Kanji() string {
+	return p.kanji
+}
+
+func (p *prefecture) Kana() string {
+	return p.kana
+}
+
+func (p *prefecture) Roma() string {
+	return p.roma
 }
