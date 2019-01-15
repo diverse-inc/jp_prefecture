@@ -56,32 +56,36 @@ var prefectureMap = map[int]Texts{
 	47: {"kanji": "沖縄県", "kana": "おきなわけん", "roma": "okinawa-ken"},
 }
 
-var kanjiFindMap = func() map[string]int {
-	kanjiMap := make(map[string]int, 47)
+var nameFindMap = func() map[string]map[string]int {
+	findMap := map[string]map[string]int{
+		"kanji": make(map[string]int, 47),
+		"kana":  make(map[string]int, 47),
+		"roma":  make(map[string]int, 47),
+	}
 
 	for code, texts := range prefectureMap {
-		kanjiMap[texts["kanji"]] = code
+		findMap["kanji"][texts["kanji"]] = code
 
 		switch code {
 		case 1:
-			kanjiMap[texts["kanji"]] = code
+			findMap["kanji"][texts["kanji"]] = code
 		case 13:
 			kanjiIndex := strings.TrimSuffix(texts["kanji"], "都")
-			kanjiMap[kanjiIndex] = code
+			findMap["kanji"][kanjiIndex] = code
 		case 26, 27:
 			kanjiIndex := strings.TrimSuffix(texts["kanji"], "府")
-			kanjiMap[kanjiIndex] = code
+			findMap["kanji"][kanjiIndex] = code
 		default:
 			kanjiIndex := strings.TrimSuffix(texts["kanji"], "県")
-			kanjiMap[kanjiIndex] = code
+			findMap["kanji"][kanjiIndex] = code
 		}
 	}
 
-	return kanjiMap
+	return findMap
 }()
 
 type prefecture struct {
-	code int
+	code  int
 	kanji string
 	kana  string
 	roma  string
@@ -122,7 +126,7 @@ func FindByCode(code int) (Prefecture, bool) {
 }
 
 func FindByKanji(kanji string) (Prefecture, bool) {
-	code, ok := kanjiFindMap[kanji]
+	code, ok := nameFindMap["kanji"][kanji]
 
 	if !ok {
 		return nil, false
