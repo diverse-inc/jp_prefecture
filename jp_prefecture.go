@@ -65,19 +65,45 @@ var nameFindMap = func() map[string]map[string]int {
 
 	for code, texts := range prefectureMap {
 		findMap["kanji"][texts["kanji"]] = code
+		findMap["kana"][texts["kana"]] = code
+		findMap["roma"][texts["roma"]] = code
 
 		switch code {
 		case 1:
 			findMap["kanji"][texts["kanji"]] = code
+			findMap["kana"][texts["kana"]] = code
+			findMap["roma"][texts["roma"]] = code
+
 		case 13:
 			kanjiIndex := strings.TrimSuffix(texts["kanji"], "都")
 			findMap["kanji"][kanjiIndex] = code
+
+			kanaIndex := strings.TrimSuffix(texts["kana"], "と")
+			findMap["kana"][kanaIndex] = code
+
+			romaIndex := strings.TrimSuffix(texts["roma"], "-to")
+			findMap["roma"][romaIndex] = code
+
 		case 26, 27:
 			kanjiIndex := strings.TrimSuffix(texts["kanji"], "府")
 			findMap["kanji"][kanjiIndex] = code
+
+			kanaIndex := strings.TrimSuffix(texts["kana"], "ふ")
+			findMap["kana"][kanaIndex] = code
+
+			romaIndex := strings.TrimSuffix(texts["roma"], "-fu")
+			findMap["roma"][romaIndex] = code
+
 		default:
 			kanjiIndex := strings.TrimSuffix(texts["kanji"], "県")
 			findMap["kanji"][kanjiIndex] = code
+
+			kanaIndex := strings.TrimSuffix(texts["kana"], "けん")
+			findMap["kana"][kanaIndex] = code
+
+			romaIndex := strings.TrimSuffix(texts["roma"], "-ken")
+			findMap["roma"][romaIndex] = code
+
 		}
 	}
 
@@ -127,6 +153,18 @@ func FindByCode(code int) (Prefecture, bool) {
 
 func FindByKanji(kanji string) (Prefecture, bool) {
 	code, ok := nameFindMap["kanji"][kanji]
+
+	if !ok {
+		return nil, false
+	}
+
+	texts := prefectureMap[code]
+	prefecture := &prefecture{code, texts["kanji"], texts["kana"], texts["roma"]}
+	return prefecture, true
+}
+
+func FindByKana(kana string) (Prefecture, bool) {
+	code, ok := nameFindMap["kana"][kana]
 
 	if !ok {
 		return nil, false
