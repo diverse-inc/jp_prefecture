@@ -26,6 +26,7 @@ var (
 	ok         bool
 )
 
+// 都道府県はPrefectureインターフェースとして返されます。
 // 取得に失敗するとokにはfalseが設定されます
 prefecture, ok = jp_prefecture.FindByCode(1)
 if !ok {
@@ -50,6 +51,5 @@ prefecture, ok = jp_prefecture.FindByKana("とうきょう")
 prefecture, ok = jp_prefecture.FindByRoma("tokyo")
 
 // List関数は全ての都道府県リストを返します。
-// 各都道府県はPrefectureインターフェースとして返されます。
 prefectures := jp_prefecture.List()
 ```
