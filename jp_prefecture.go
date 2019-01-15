@@ -4,9 +4,9 @@ import (
 	"strings"
 )
 
-type Texts = map[string]string
+type texts = map[string]string
 
-var prefectureMap = map[int]Texts{
+var prefectureMap = map[int]texts{
 	1:  {"kanji": "北海道", "kana": "ほっかいどう", "roma": "hokkaido"},
 	2:  {"kanji": "青森県", "kana": "あおもりけん", "roma": "aomori-ken"},
 	3:  {"kanji": "岩手県", "kana": "いわてけん", "roma": "iwate-ken"},
