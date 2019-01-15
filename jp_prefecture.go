@@ -174,3 +174,15 @@ func FindByKana(kana string) (Prefecture, bool) {
 	prefecture := &prefecture{code, texts["kanji"], texts["kana"], texts["roma"]}
 	return prefecture, true
 }
+
+func FindByRoma(roma string) (Prefecture, bool) {
+	code, ok := nameFindMap["roma"][roma]
+
+	if !ok {
+		return nil, false
+	}
+
+	texts := prefectureMap[code]
+	prefecture := &prefecture{code, texts["kanji"], texts["kana"], texts["roma"]}
+	return prefecture, true
+}
