@@ -81,3 +81,14 @@ func (p *prefecture) Kana() string {
 func (p *prefecture) Roma() string {
 	return p.roma
 }
+
+func FindByCode(code int) (Prefecture, bool) {
+	texts, ok := prefectureMap[code]
+
+	if !ok {
+		return nil, false
+	}
+
+	prefecture := &prefecture{code, texts["kanji"], texts["kana"], texts["roma"]}
+	return prefecture, true
+}
