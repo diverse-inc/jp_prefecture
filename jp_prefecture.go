@@ -145,7 +145,7 @@ func List() []Prefecture {
 
 	for code, texts := range prefectureMap {
 		prefecture := &prefecture{code, texts["kanji"], texts["kana"], texts["roma"]}
-		prefectures = append(prefectures, prefecture)
+		prefectures[code-1] = prefecture
 	}
 
 	return prefectures
