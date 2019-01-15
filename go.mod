@@ -1,1 +1,1 @@
-module jp_prefecture
+module github.com/diverse-inc/jp_prefecture
