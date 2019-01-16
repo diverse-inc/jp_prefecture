@@ -1,15 +1,33 @@
 version: 2
+
+_test_steps: &test_steps
+  working_directory: /go/src/github.com/diverse-inc/jp_prefecture
+  steps:
+    - checkout
+    - run:
+        name: Run tests
+        command: gotestsum --format standard-verbose --junitfile ./unit-tests.xml -- -cover
+    - store_test_results:
+        path: ./
+
 jobs:
-  build:
+  go-1.9:
     docker:
       - image: circleci/golang:1.9
+    <<: *test_steps
+  go-1.10:
+    docker:
       - image: circleci/golang:1.10
+    <<: *test_steps
+  go-1.11:
+    docker:
       - image: circleci/golang:1.11
-    working_directory: /go/src/github.com/diverse-inc/jp_prefecture
-    steps:
-      - checkout
-      - run:
-          name: Run tests
-          command: gotestsum --format standard-verbose --junitfile ./unit-tests.xml -- -cover
-      - store_test_results:
-          path: ./
+    <<: *test_steps
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - go-1.9
+      - go-1.10
+      - go-1.11
