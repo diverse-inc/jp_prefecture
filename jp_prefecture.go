@@ -62,56 +62,60 @@ const (
 	prefectureCodeOfTokyo    = 13
 	prefectureCodeOfKyoto    = 26
 	prefectureCodeOfOsaka    = 27
+
+	findMapKeyKanji = 0
+	findMayKeyKana  = 1
+	findMapKeyRoma  = 2
 )
 
 // nameFindMap は漢字、かな、ローマ字で都道府県情報を検索しやすくするためのインデックスマップです。
-var nameFindMap = func() map[string]map[string]int {
-	findMap := map[string]map[string]int{
-		"kanji": make(map[string]int, prefectureSize),
-		"kana":  make(map[string]int, prefectureSize),
-		"roma":  make(map[string]int, prefectureSize),
+var nameFindMap = func() map[uint8]map[string]int {
+	findMap := map[uint8]map[string]int{
+		findMapKeyKanji: make(map[string]int, prefectureSize),
+		findMayKeyKana:  make(map[string]int, prefectureSize),
+		findMapKeyRoma:  make(map[string]int, prefectureSize),
 	}
 
 	for code, prefecture := range prefectureMap {
-		findMap["kanji"][prefecture.kanji] = code
-		findMap["kana"][prefecture.kana] = code
-		findMap["roma"][prefecture.roma] = code
+		findMap[findMapKeyKanji][prefecture.kanji] = code
+		findMap[findMayKeyKana][prefecture.kana] = code
+		findMap[findMapKeyRoma][prefecture.roma] = code
 
 		switch code {
 		case prefectureCodeOfHokkaido:
-			findMap["kanji"][prefecture.kanji] = code
-			findMap["kana"][prefecture.kana] = code
-			findMap["roma"][prefecture.roma] = code
+			findMap[findMapKeyKanji][prefecture.kanji] = code
+			findMap[findMayKeyKana][prefecture.kana] = code
+			findMap[findMapKeyRoma][prefecture.roma] = code
 
 		case prefectureCodeOfTokyo:
 			kanjiIndex := strings.TrimSuffix(prefecture.kanji, "都")
-			findMap["kanji"][kanjiIndex] = code
+			findMap[findMapKeyKanji][kanjiIndex] = code
 
 			kanaIndex := strings.TrimSuffix(prefecture.kana, "と")
-			findMap["kana"][kanaIndex] = code
+			findMap[findMayKeyKana][kanaIndex] = code
 
 			romaIndex := strings.TrimSuffix(prefecture.roma, "-to")
-			findMap["roma"][romaIndex] = code
+			findMap[findMapKeyRoma][romaIndex] = code
 
 		case prefectureCodeOfKyoto, prefectureCodeOfOsaka:
 			kanjiIndex := strings.TrimSuffix(prefecture.kanji, "府")
-			findMap["kanji"][kanjiIndex] = code
+			findMap[findMapKeyKanji][kanjiIndex] = code
 
 			kanaIndex := strings.TrimSuffix(prefecture.kana, "ふ")
-			findMap["kana"][kanaIndex] = code
+			findMap[findMayKeyKana][kanaIndex] = code
 
 			romaIndex := strings.TrimSuffix(prefecture.roma, "-fu")
-			findMap["roma"][romaIndex] = code
+			findMap[findMapKeyRoma][romaIndex] = code
 
 		default:
 			kanjiIndex := strings.TrimSuffix(prefecture.kanji, "県")
-			findMap["kanji"][kanjiIndex] = code
+			findMap[findMapKeyKanji][kanjiIndex] = code
 
 			kanaIndex := strings.TrimSuffix(prefecture.kana, "けん")
-			findMap["kana"][kanaIndex] = code
+			findMap[findMayKeyKana][kanaIndex] = code
 
 			romaIndex := strings.TrimSuffix(prefecture.roma, "-ken")
-			findMap["roma"][romaIndex] = code
+			findMap[findMapKeyRoma][romaIndex] = code
 
 		}
 	}
@@ -146,7 +150,7 @@ func FindByCode(code int) (Prefecture, bool) {
 // 与える値の末尾にある「都」、「府」、「県」は省略可能です。
 // 対応する都道府県情報が見つからない場合、`ok`に`false`が設定され、都道府県情報は`nil`で返されます。
 func FindByKanji(kanji string) (Prefecture, bool) {
-	code, ok := nameFindMap["kanji"][kanji]
+	code, ok := nameFindMap[findMapKeyKanji][kanji]
 
 	if !ok {
 		return nil, false
@@ -159,7 +163,7 @@ func FindByKanji(kanji string) (Prefecture, bool) {
 // 与える値の末尾にある「と」、「ふ」、「けん」は省略可能です。
 // 対応する都道府県情報が見つからない場合、`ok`に`false`が設定され、都道府県情報は`nil`で返されます。
 func FindByKana(kana string) (Prefecture, bool) {
-	code, ok := nameFindMap["kana"][kana]
+	code, ok := nameFindMap[findMayKeyKana][kana]
 
 	if !ok {
 		return nil, false
@@ -173,7 +177,7 @@ func FindByKana(kana string) (Prefecture, bool) {
 // 与える値はUpperCamelCase、LowerCamelCaseを問いません。
 // 対応する都道府県情報が見つからない場合、`ok`に`false`が設定され、都道府県情報は`nil`で返されます。
 func FindByRoma(roma string) (Prefecture, bool) {
-	code, ok := nameFindMap["roma"][strings.ToLower(roma)]
+	code, ok := nameFindMap[findMapKeyRoma][strings.ToLower(roma)]
 
 	if !ok {
 		return nil, false
