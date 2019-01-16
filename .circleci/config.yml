@@ -11,10 +11,6 @@ _test_steps: &test_steps
         path: ./
 
 jobs:
-  go-1.9:
-    docker:
-      - image: circleci/golang:1.9
-    <<: *test_steps
   go-1.10:
     docker:
       - image: circleci/golang:1.10
@@ -28,6 +24,5 @@ workflows:
   version: 2
   test:
     jobs:
-      - go-1.9
       - go-1.10
       - go-1.11
