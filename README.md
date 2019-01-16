@@ -1,5 +1,6 @@
 # jp_prefecture
 
+[![CircleCI](https://circleci.com/gh/diverse-inc/jp_prefecture.svg?style=svg)](https://circleci.com/gh/diverse-inc/jp_prefecture)
 [![GoDoc](https://godoc.org/github.com/diverse-inc/jp_prefecture?status.svg)](https://godoc.org/github.com/diverse-inc/jp_prefecture)
 
 `jp_prefecture`は _JIS X 0401_ の規格に基づいた都道府県情報の取得、及び検索機能を提供するライブラリです。
