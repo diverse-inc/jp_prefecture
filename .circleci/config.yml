@@ -1,0 +1,15 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.9
+      - image: circleci/golang:1.10
+      - image: circleci/golang:1.11
+    working_directory: /go/src/github.com/diverse-inc/jp_prefecture
+    steps:
+      - checkout
+      - run:
+          name: Run tests
+          command: gotestsum --format standard-verbose --junitfile ./unit-tests.xml -- -cover
+      - store_test_results:
+          path: ./
