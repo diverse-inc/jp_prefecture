@@ -108,11 +108,6 @@ var prefectureMap = map[int]*prefecture{
 const (
 	prefectureSize = 47
 
-	prefectureCodeOfHokkaido = 1
-	prefectureCodeOfTokyo    = 13
-	prefectureCodeOfKyoto    = 26
-	prefectureCodeOfOsaka    = 27
-
 	findMapKeyKanji = 0
 	findMayKeyKana  = 1
 	findMapKeyRoma  = 2
@@ -132,12 +127,12 @@ var nameFindMap = func() map[uint8]map[string]int {
 		findMap[findMapKeyRoma][prefecture.roma] = code
 
 		switch code {
-		case prefectureCodeOfHokkaido:
+		case JISCodeHokkaido:
 			findMap[findMapKeyKanji][prefecture.kanji] = code
 			findMap[findMayKeyKana][prefecture.kana] = code
 			findMap[findMapKeyRoma][prefecture.roma] = code
 
-		case prefectureCodeOfTokyo:
+		case JISCodeTokyo:
 			kanjiIndex := strings.TrimSuffix(prefecture.kanji, "都")
 			findMap[findMapKeyKanji][kanjiIndex] = code
 
@@ -147,7 +142,7 @@ var nameFindMap = func() map[uint8]map[string]int {
 			romaIndex := strings.TrimSuffix(prefecture.roma, "-to")
 			findMap[findMapKeyRoma][romaIndex] = code
 
-		case prefectureCodeOfKyoto, prefectureCodeOfOsaka:
+		case JISCodeKyoto, JISCodeOsaka:
 			kanjiIndex := strings.TrimSuffix(prefecture.kanji, "府")
 			findMap[findMapKeyKanji][kanjiIndex] = code
 
