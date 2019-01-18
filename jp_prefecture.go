@@ -6,7 +6,7 @@ import (
 
 const (
 	JISCodeHokkaido  = 1
-	JISCodeAomoti    = 2
+	JISCodeAomori    = 2
 	JISCodeIwate     = 3
 	JISCodeMiyagi    = 4
 	JISCodeAkita     = 5
@@ -38,7 +38,7 @@ const (
 	JISCodeTottori   = 31
 	JISCodeShimane   = 32
 	JISCodeOkayama   = 33
-	JISCodeHitoshima = 34
+	JISCodeHiroshima = 34
 	JISCodeYamaguchi = 35
 	JISCodeTokushima = 36
 	JISCodeKagawa    = 37
@@ -51,7 +51,7 @@ const (
 	JISCodeOita      = 44
 	JISCodeMiyazaki  = 45
 	JISCodeKagoshima = 46
-	JISCodeOlinawa   = 47
+	JISCodeOkinawa   = 47
 )
 
 // prefectureMap は都道府県の情報を”コード：名称のMap（漢字、かな、ローマ字）”形式で定義した値です。
