@@ -18,6 +18,7 @@ type Prefecture interface {
 	Kanji() string
 	KanjiShort() string
 	Kana() string
+	KanaShort() string
 	Roma() string
 }
 
@@ -48,6 +49,20 @@ func (p *prefecture) KanjiShort() string {
 // Kana は都道府県のかな名を返します、末尾には「と」、「ふ」、「けん」が付与された状態で値が返ります。
 func (p *prefecture) Kana() string {
 	return p.kana
+}
+
+// KanaShort は都道府県名の末尾から「と」、「ふ」、「けん」を除いた漢字名を返します。
+func (p *prefecture) KanaShort() string {
+	switch p.code {
+	case JISCodeHokkaido:
+		return p.kana
+	case JISCodeTokyo:
+		return strings.TrimSuffix(p.kana, "と")
+	case JISCodeKyoto, JISCodeOsaka:
+		return strings.TrimSuffix(p.kana, "ふ")
+	default:
+		return strings.TrimSuffix(p.kana, "けん")
+	}
 }
 
 // Roma は都道府県のローマ字名を返します、末尾には「-to」、「-fu」、「-ken」が付与された状態で値が返ります。
