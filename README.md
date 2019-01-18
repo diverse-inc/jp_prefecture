@@ -21,38 +21,38 @@ package main
 import (
 	"log"
 
-	"github.com/diverse-inc/jp_prefecture"
+	pref "github.com/diverse-inc/jp_prefecture"
 )
 
 var (
-	prefecture jp_prefecture.Prefecture
-	ok         bool
+	prefInfo pref.Prefecture
+	ok       bool
 )
 
 // 都道府県はPrefectureインターフェースとして返されます。
 // 取得に失敗するとokにはfalseが設定されます
-prefecture, ok = jp_prefecture.FindByCode(1)
+prefInfo, ok = pref.FindByCode(1)
 if !ok {
 	log.Print("prefecture not found.")
 } else {
-	log.Print(prefecture.Code())  // 都道府県コード
-	log.Print(prefecture.Kanji()) // 都道府県名（漢字）
-	log.Print(prefecture.Kana())  // 都道府県名（かな）
-	log.Print(prefecture.Roma())  // 都道府県名（ローマ字）
+	log.Print(prefInfo.Code())  // 都道府県コード
+	log.Print(prefInfo.Kanji()) // 都道府県名（漢字）
+	log.Print(prefInfo.Kana())  // 都道府県名（かな）
+	log.Print(prefInfo.Roma())  // 都道府県名（ローマ字）
 }
 
 // 漢字名検索では末尾の「都」、「府」、「県」は省略して検索できます。
 // ※省略しない場合でも問題ありません。
-prefecture, ok = jp_prefecture.FindByKanji("東京")
+prefInfo, ok = pref.FindByKanji("東京")
 
 // かな検索では末尾の「と」、「ふ」、「けん」は省略して検索できます。
 // ※省略しない場合でも問題ありません。
-prefecture, ok = jp_prefecture.FindByKana("とうきょう")
+prefInfo, ok = pref.FindByKana("とうきょう")
 
 // ローマ字検索では末尾の「-to」、「-fu」、「-ken」は省略して検索できます。
 // ※省略しない場合でも問題ありません。
-prefecture, ok = jp_prefecture.FindByRoma("tokyo")
+prefInfo, ok = pref.FindByRoma("tokyo")
 
 // List関数は全ての都道府県リストを返します。
-prefectures := jp_prefecture.List()
+prefInfo := pref.List()
 ```
