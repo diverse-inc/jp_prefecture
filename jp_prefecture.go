@@ -128,9 +128,8 @@ var nameFindMap = func() map[uint8]map[string]*prefecture {
 
 		switch code {
 		case JISCodeHokkaido:
-			findMap[findMapKeyKanji][prefecture.kanji] = prefecture
-			findMap[findMayKeyKana][prefecture.kana] = prefecture
-			findMap[findMapKeyRoma][prefecture.roma] = prefecture
+			// 北海道は短縮名が存在しないので処理をスキップする
+			continue
 
 		case JISCodeTokyo:
 			kanjiIndex := strings.TrimSuffix(prefecture.kanji, "都")
