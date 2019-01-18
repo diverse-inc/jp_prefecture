@@ -54,6 +54,14 @@ const (
 	JISCodeOkinawa   = 47
 )
 
+const (
+	prefectureSize = 47
+
+	findMapKeyKanji = 0
+	findMayKeyKana  = 1
+	findMapKeyRoma  = 2
+)
+
 // prefectureMap は都道府県の情報を”コード：名称のMap（漢字、かな、ローマ字）”形式で定義した値です。
 var prefectureMap = map[int]*prefecture{
 	JISCodeHokkaido:  {code: JISCodeHokkaido, kanji: "北海道", kana: "ほっかいどう", roma: "hokkaido"},
@@ -104,14 +112,6 @@ var prefectureMap = map[int]*prefecture{
 	JISCodeKagoshima: {code: JISCodeKagoshima, kanji: "鹿児島県", kana: "かごしまけん", roma: "kagoshima-ken"},
 	JISCodeOkinawa:   {code: JISCodeOkinawa, kanji: "沖縄県", kana: "おきなわけん", roma: "okinawa-ken"},
 }
-
-const (
-	prefectureSize = 47
-
-	findMapKeyKanji = 0
-	findMayKeyKana  = 1
-	findMapKeyRoma  = 2
-)
 
 // nameFindMap は漢字、かな、ローマ字で都道府県情報を検索しやすくするためのインデックスマップです。
 var nameFindMap = func() map[uint8]map[string]int {
