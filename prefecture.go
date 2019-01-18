@@ -16,6 +16,7 @@ type prefecture struct {
 type Prefecture interface {
 	Code() int
 	Kanji() string
+	KanjiShort() string
 	Kana() string
 	Roma() string
 }
