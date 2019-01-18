@@ -63,3 +63,20 @@ func TestPrefecture_Roma(t *testing.T) {
 		t.Fatal()
 	}
 }
+
+func TestPrefecture_RomaShort(t *testing.T) {
+	testData := map[Prefecture]string{
+		prefectureMap[JISCodeHokkaido]: "hokkaido",
+		prefectureMap[JISCodeTokyo]:    "tokyo",
+		prefectureMap[JISCodeKyoto]:    "kyoto",
+		prefectureMap[JISCodeOsaka]:    "osaka",
+		prefectureMap[JISCodeOkinawa]:  "okinawa",
+	}
+
+	for pref, expect := range testData {
+		roma := pref.RomaShort()
+		if roma != expect {
+			t.Fatal()
+		}
+	}
+}
