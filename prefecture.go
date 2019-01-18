@@ -1,5 +1,9 @@
 package jp_prefecture
 
+import (
+	"strings"
+)
+
 // prefecture は都道府県情報を定義する構造体です。
 type prefecture struct {
 	code  int
@@ -24,6 +28,20 @@ func (p *prefecture) Code() int {
 // Kanji は都道府県の漢字名を返します、末尾には「都」、「府」、「県」が付与された状態で値が返ります。
 func (p *prefecture) Kanji() string {
 	return p.kanji
+}
+
+// KanjiShort は都道府県名の末尾から「都」、「府」、「県」を除いた漢字名を返します。
+func (p *prefecture) KanjiShort() string {
+	switch p.code {
+	case JISCodeHokkaido:
+		return p.kanji
+	case JISCodeTokyo:
+		return strings.TrimSuffix(p.kanji, "都")
+	case JISCodeKyoto, JISCodeOsaka:
+		return strings.TrimSuffix(p.kanji, "府")
+	default:
+		return strings.TrimSuffix(p.kanji, "県")
+	}
 }
 
 // Kana は都道府県のかな名を返します、末尾には「と」、「ふ」、「けん」が付与された状態で値が返ります。
