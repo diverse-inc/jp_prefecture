@@ -114,53 +114,53 @@ var prefectureMap = map[int]*prefecture{
 }
 
 // nameFindMap は漢字、かな、ローマ字で都道府県情報を検索しやすくするためのインデックスマップです。
-var nameFindMap = func() map[uint8]map[string]int {
-	findMap := map[uint8]map[string]int{
-		findMapKeyKanji: make(map[string]int, prefectureSize),
-		findMayKeyKana:  make(map[string]int, prefectureSize),
-		findMapKeyRoma:  make(map[string]int, prefectureSize),
+var nameFindMap = func() map[uint8]map[string]*prefecture {
+	findMap := map[uint8]map[string]*prefecture{
+		findMapKeyKanji: make(map[string]*prefecture, prefectureSize),
+		findMayKeyKana:  make(map[string]*prefecture, prefectureSize),
+		findMapKeyRoma:  make(map[string]*prefecture, prefectureSize),
 	}
 
 	for code, prefecture := range prefectureMap {
-		findMap[findMapKeyKanji][prefecture.kanji] = code
-		findMap[findMayKeyKana][prefecture.kana] = code
-		findMap[findMapKeyRoma][prefecture.roma] = code
+		findMap[findMapKeyKanji][prefecture.kanji] = prefecture
+		findMap[findMayKeyKana][prefecture.kana] = prefecture
+		findMap[findMapKeyRoma][prefecture.roma] = prefecture
 
 		switch code {
 		case JISCodeHokkaido:
-			findMap[findMapKeyKanji][prefecture.kanji] = code
-			findMap[findMayKeyKana][prefecture.kana] = code
-			findMap[findMapKeyRoma][prefecture.roma] = code
+			findMap[findMapKeyKanji][prefecture.kanji] = prefecture
+			findMap[findMayKeyKana][prefecture.kana] = prefecture
+			findMap[findMapKeyRoma][prefecture.roma] = prefecture
 
 		case JISCodeTokyo:
 			kanjiIndex := strings.TrimSuffix(prefecture.kanji, "都")
-			findMap[findMapKeyKanji][kanjiIndex] = code
+			findMap[findMapKeyKanji][kanjiIndex] = prefecture
 
 			kanaIndex := strings.TrimSuffix(prefecture.kana, "と")
-			findMap[findMayKeyKana][kanaIndex] = code
+			findMap[findMayKeyKana][kanaIndex] = prefecture
 
 			romaIndex := strings.TrimSuffix(prefecture.roma, "-to")
-			findMap[findMapKeyRoma][romaIndex] = code
+			findMap[findMapKeyRoma][romaIndex] = prefecture
 
 		case JISCodeKyoto, JISCodeOsaka:
 			kanjiIndex := strings.TrimSuffix(prefecture.kanji, "府")
-			findMap[findMapKeyKanji][kanjiIndex] = code
+			findMap[findMapKeyKanji][kanjiIndex] = prefecture
 
 			kanaIndex := strings.TrimSuffix(prefecture.kana, "ふ")
-			findMap[findMayKeyKana][kanaIndex] = code
+			findMap[findMayKeyKana][kanaIndex] = prefecture
 
 			romaIndex := strings.TrimSuffix(prefecture.roma, "-fu")
-			findMap[findMapKeyRoma][romaIndex] = code
+			findMap[findMapKeyRoma][romaIndex] = prefecture
 
 		default:
 			kanjiIndex := strings.TrimSuffix(prefecture.kanji, "県")
-			findMap[findMapKeyKanji][kanjiIndex] = code
+			findMap[findMapKeyKanji][kanjiIndex] = prefecture
 
 			kanaIndex := strings.TrimSuffix(prefecture.kana, "けん")
-			findMap[findMayKeyKana][kanaIndex] = code
+			findMap[findMayKeyKana][kanaIndex] = prefecture
 
 			romaIndex := strings.TrimSuffix(prefecture.roma, "-ken")
-			findMap[findMapKeyRoma][romaIndex] = code
+			findMap[findMapKeyRoma][romaIndex] = prefecture
 
 		}
 	}
@@ -195,26 +195,26 @@ func FindByCode(code int) (Prefecture, bool) {
 // 与える値の末尾にある「都」、「府」、「県」は省略可能です。
 // 対応する都道府県情報が見つからない場合、`ok`に`false`が設定され、都道府県情報は`nil`で返されます。
 func FindByKanji(kanji string) (Prefecture, bool) {
-	code, ok := nameFindMap[findMapKeyKanji][kanji]
+	prefecture, ok := nameFindMap[findMapKeyKanji][kanji]
 
 	if !ok {
 		return nil, false
 	}
 
-	return prefectureMap[code], true
+	return prefecture, true
 }
 
 // FindByKana は与えた都道府県のかな名に対応する都道府県情報を返します。
 // 与える値の末尾にある「と」、「ふ」、「けん」は省略可能です。
 // 対応する都道府県情報が見つからない場合、`ok`に`false`が設定され、都道府県情報は`nil`で返されます。
 func FindByKana(kana string) (Prefecture, bool) {
-	code, ok := nameFindMap[findMayKeyKana][kana]
+	prefecture, ok := nameFindMap[findMayKeyKana][kana]
 
 	if !ok {
 		return nil, false
 	}
 
-	return prefectureMap[code], true
+	return prefecture, true
 }
 
 // FindByRoma は与えた都道府県のローマ字名に対応する都道府県情報を返します。
@@ -222,11 +222,11 @@ func FindByKana(kana string) (Prefecture, bool) {
 // 与える値はUpperCamelCase、LowerCamelCaseを問いません。
 // 対応する都道府県情報が見つからない場合、`ok`に`false`が設定され、都道府県情報は`nil`で返されます。
 func FindByRoma(roma string) (Prefecture, bool) {
-	code, ok := nameFindMap[findMapKeyRoma][strings.ToLower(roma)]
+	prefecture, ok := nameFindMap[findMapKeyRoma][strings.ToLower(roma)]
 
 	if !ok {
 		return nil, false
 	}
 
-	return prefectureMap[code], true
+	return prefecture, true
 }
