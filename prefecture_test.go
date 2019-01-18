@@ -41,6 +41,23 @@ func TestPrefecture_Kana(t *testing.T) {
 	}
 }
 
+func TestPrefecture_KanaShort(t *testing.T) {
+	testData := map[Prefecture]string{
+		prefectureMap[JISCodeHokkaido]: "ほっかいどう",
+		prefectureMap[JISCodeTokyo]:    "とうきょう",
+		prefectureMap[JISCodeKyoto]:    "きょうと",
+		prefectureMap[JISCodeOsaka]:    "おおさか",
+		prefectureMap[JISCodeOkinawa]:  "おきなわ",
+	}
+
+	for pref, expect := range testData {
+		kana := pref.KanaShort()
+		if kana != expect {
+			t.Fatal()
+		}
+	}
+}
+
 func TestPrefecture_Roma(t *testing.T) {
 	if prefectureTestData.Roma() != "roma" {
 		t.Fatal()

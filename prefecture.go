@@ -51,7 +51,7 @@ func (p *prefecture) Kana() string {
 	return p.kana
 }
 
-// KanaShort は都道府県名の末尾から「と」、「ふ」、「けん」を除いた漢字名を返します。
+// KanaShort は都道府県名の末尾から「と」、「ふ」、「けん」を除いたかな名を返します。
 func (p *prefecture) KanaShort() string {
 	switch p.code {
 	case JISCodeHokkaido:
