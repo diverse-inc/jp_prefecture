@@ -4,6 +4,56 @@ import (
 	"strings"
 )
 
+const (
+	JISCodeHokkaido  = 1
+	JISCodeAomoti    = 2
+	JISCodeIwate     = 3
+	JISCodeMiyagi    = 4
+	JISCodeAkita     = 5
+	JISCodeYamagata  = 6
+	JISCodeFukushima = 7
+	JISCodeIbaraki   = 8
+	JISCodeTochigi   = 9
+	JISCodeGunma     = 10
+	JISCodeSaitama   = 11
+	JISCodeChiba     = 12
+	JISCodeTokyo     = 13
+	JISCodeKanagawa  = 14
+	JISCodeNiigata   = 15
+	JISCodeToyama    = 16
+	JISCodeIshikawa  = 17
+	JISCodeFukui     = 18
+	JISCodeYamanashi = 19
+	JISCodeNagano    = 20
+	JISCodeGifu      = 21
+	JISCodeShizuoka  = 22
+	JISCodeAichi     = 23
+	JISCodeMie       = 24
+	JISCodeShiga     = 25
+	JISCodeKyoto     = 26
+	JISCodeOsaka     = 27
+	JISCodeHyogo     = 28
+	JISCodeNara      = 29
+	JISCodeWakayama  = 30
+	JISCodeTottori   = 31
+	JISCodeShimane   = 32
+	JISCodeOkayama   = 33
+	JISCodeHitoshima = 34
+	JISCodeYamaguchi = 35
+	JISCodeTokushima = 36
+	JISCodeKagawa    = 37
+	JISCodeEhime     = 38
+	JISCodeKochi     = 39
+	JISCodeFukuoka   = 40
+	JISCodeSaga      = 41
+	JISCodeNagasaki  = 42
+	JISCodeKumamoto  = 43
+	JISCodeOita      = 44
+	JISCodeMiyazaki  = 45
+	JISCodeKagoshima = 46
+	JISCodeOlinawa   = 47
+)
+
 // prefectureMap は都道府県の情報を”コード：名称のMap（漢字、かな、ローマ字）”形式で定義した値です。
 var prefectureMap = map[int]*prefecture{
 	1:  {code: 1, kanji: "北海道", kana: "ほっかいどう", roma: "hokkaido"},
