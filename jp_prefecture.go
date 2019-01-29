@@ -116,8 +116,8 @@ var prefectureMap = map[int]*prefecture{
 // hokkaido は北海道地方の情報を定義した値です。
 var hokkaido = &region{
 	kanji: "北海道",
-	kana: "ほっかいどう",
-	roma: "hokkaidou",
+	kana:  "ほっかいどう",
+	roma:  "hokkaidou",
 	prefectureCodes: []int{
 		JISCodeHokkaido,
 	},
@@ -126,8 +126,8 @@ var hokkaido = &region{
 // tohoku は東北地方の情報を定義した値です。
 var tohoku = &region{
 	kanji: "東北",
-	kana: "とうほく",
-	roma: "tohoku",
+	kana:  "とうほく",
+	roma:  "tohoku",
 	prefectureCodes: []int{
 		JISCodeAomori,
 		JISCodeIwate,
@@ -141,8 +141,8 @@ var tohoku = &region{
 // kanto は関東地方の情報を定義した値です。
 var kanto = &region{
 	kanji: "関東",
-	kana: "かんとう",
-	roma: "kanto",
+	kana:  "かんとう",
+	roma:  "kanto",
 	prefectureCodes: []int{
 		JISCodeIbaraki,
 		JISCodeTochigi,
@@ -157,8 +157,8 @@ var kanto = &region{
 // chubu は中部地方の情報を定義した値です。
 var chubu = &region{
 	kanji: "中部",
-	kana: "ちゅうぶ",
-	roma: "chubu",
+	kana:  "ちゅうぶ",
+	roma:  "chubu",
 	prefectureCodes: []int{
 		JISCodeNiigata,
 		JISCodeToyama,
@@ -175,8 +175,8 @@ var chubu = &region{
 // kansai は関西地方の情報を定義した値です。
 var kansai = &region{
 	kanji: "関西",
-	kana: "かんさい",
-	roma: "kansai",
+	kana:  "かんさい",
+	roma:  "kansai",
 	prefectureCodes: []int{
 		JISCodeMie,
 		JISCodeShiga,
@@ -191,8 +191,8 @@ var kansai = &region{
 // chugoku は中国地方の情報を定義した値です。
 var chugoku = &region{
 	kanji: "中国",
-	kana: "ちゅうごく",
-	roma: "chugoku",
+	kana:  "ちゅうごく",
+	roma:  "chugoku",
 	prefectureCodes: []int{
 		JISCodeTottori,
 		JISCodeShimane,
@@ -205,8 +205,8 @@ var chugoku = &region{
 // shikoku は四国地方の情報を定義した値です。
 var shikoku = &region{
 	kanji: "四国",
-	kana: "しこく",
-	roma: "shikoku",
+	kana:  "しこく",
+	roma:  "shikoku",
 	prefectureCodes: []int{
 		JISCodeTokushima,
 		JISCodeKagawa,
@@ -218,8 +218,8 @@ var shikoku = &region{
 // kyushu は九州地方の情報を定義した値です。
 var kyushu = &region{
 	kanji: "九州",
-	kana: "きゅうしゅう",
-	roma: "kyushu",
+	kana:  "きゅうしゅう",
+	roma:  "kyushu",
 	prefectureCodes: []int{
 		JISCodeFukuoka,
 		JISCodeSaga,
@@ -295,6 +295,20 @@ func List() []Prefecture {
 	}
 
 	return prefectures
+}
+
+// RegionList は地域のリストを返します。
+func RegionList() []Region {
+	return []Region{
+		hokkaido,
+		tohoku,
+		kanto,
+		chubu,
+		kansai,
+		chugoku,
+		shikoku,
+		kyushu,
+	}
 }
 
 // FindByCode は与えた都道府県コードに対応する都道府県情報を返します。
