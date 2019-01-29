@@ -113,6 +113,125 @@ var prefectureMap = map[int]*prefecture{
 	JISCodeOkinawa:   {code: JISCodeOkinawa, kanji: "沖縄県", kana: "おきなわけん", roma: "okinawa-ken"},
 }
 
+// hokkaido は北海道地方の情報を定義した値です。
+var hokkaido = &region{
+	kanji: "北海道",
+	kana:  "ほっかいどう",
+	roma:  "hokkaidou",
+	prefectureCodes: []int{
+		JISCodeHokkaido,
+	},
+}
+
+// tohoku は東北地方の情報を定義した値です。
+var tohoku = &region{
+	kanji: "東北",
+	kana:  "とうほく",
+	roma:  "tohoku",
+	prefectureCodes: []int{
+		JISCodeAomori,
+		JISCodeIwate,
+		JISCodeMiyagi,
+		JISCodeAkita,
+		JISCodeYamagata,
+		JISCodeFukushima,
+	},
+}
+
+// kanto は関東地方の情報を定義した値です。
+var kanto = &region{
+	kanji: "関東",
+	kana:  "かんとう",
+	roma:  "kanto",
+	prefectureCodes: []int{
+		JISCodeIbaraki,
+		JISCodeTochigi,
+		JISCodeGunma,
+		JISCodeSaitama,
+		JISCodeChiba,
+		JISCodeTokyo,
+		JISCodeKanagawa,
+	},
+}
+
+// chubu は中部地方の情報を定義した値です。
+var chubu = &region{
+	kanji: "中部",
+	kana:  "ちゅうぶ",
+	roma:  "chubu",
+	prefectureCodes: []int{
+		JISCodeNiigata,
+		JISCodeToyama,
+		JISCodeIshikawa,
+		JISCodeFukui,
+		JISCodeYamanashi,
+		JISCodeNagano,
+		JISCodeGifu,
+		JISCodeShizuoka,
+		JISCodeAichi,
+	},
+}
+
+// kansai は関西地方の情報を定義した値です。
+var kansai = &region{
+	kanji: "関西",
+	kana:  "かんさい",
+	roma:  "kansai",
+	prefectureCodes: []int{
+		JISCodeMie,
+		JISCodeShiga,
+		JISCodeKyoto,
+		JISCodeOsaka,
+		JISCodeHyogo,
+		JISCodeNara,
+		JISCodeWakayama,
+	},
+}
+
+// chugoku は中国地方の情報を定義した値です。
+var chugoku = &region{
+	kanji: "中国",
+	kana:  "ちゅうごく",
+	roma:  "chugoku",
+	prefectureCodes: []int{
+		JISCodeTottori,
+		JISCodeShimane,
+		JISCodeOkayama,
+		JISCodeHiroshima,
+		JISCodeYamaguchi,
+	},
+}
+
+// shikoku は四国地方の情報を定義した値です。
+var shikoku = &region{
+	kanji: "四国",
+	kana:  "しこく",
+	roma:  "shikoku",
+	prefectureCodes: []int{
+		JISCodeTokushima,
+		JISCodeKagawa,
+		JISCodeEhime,
+		JISCodeKochi,
+	},
+}
+
+// kyushu は九州地方の情報を定義した値です。
+var kyushu = &region{
+	kanji: "九州",
+	kana:  "きゅうしゅう",
+	roma:  "kyushu",
+	prefectureCodes: []int{
+		JISCodeFukuoka,
+		JISCodeSaga,
+		JISCodeNagasaki,
+		JISCodeKumamoto,
+		JISCodeOita,
+		JISCodeMiyazaki,
+		JISCodeKagoshima,
+		JISCodeOkinawa,
+	},
+}
+
 // nameFindMap は漢字、かな、ローマ字で都道府県情報を検索しやすくするためのインデックスマップです。
 var nameFindMap = func() map[uint8]map[string]*prefecture {
 	findMap := map[uint8]map[string]*prefecture{
@@ -128,9 +247,8 @@ var nameFindMap = func() map[uint8]map[string]*prefecture {
 
 		switch code {
 		case JISCodeHokkaido:
-			findMap[findMapKeyKanji][prefecture.kanji] = prefecture
-			findMap[findMayKeyKana][prefecture.kana] = prefecture
-			findMap[findMapKeyRoma][prefecture.roma] = prefecture
+			// 北海道は短縮名が存在しないので処理をスキップする
+			continue
 
 		case JISCodeTokyo:
 			kanjiIndex := strings.TrimSuffix(prefecture.kanji, "都")
@@ -177,6 +295,20 @@ func List() []Prefecture {
 	}
 
 	return prefectures
+}
+
+// RegionList は地域のリストを返します。
+func RegionList() []Region {
+	return []Region{
+		hokkaido,
+		tohoku,
+		kanto,
+		chubu,
+		kansai,
+		chugoku,
+		shikoku,
+		kyushu,
+	}
 }
 
 // FindByCode は与えた都道府県コードに対応する都道府県情報を返します。
