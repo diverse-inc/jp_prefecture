@@ -21,6 +21,39 @@ func TestList(t *testing.T) {
 	}
 }
 
+func TestRegionList(t *testing.T) {
+	list := RegionList()
+
+	if len(list) != 8 {
+		t.Fatal()
+	}
+
+	if list[0] != hokkaido {
+		t.Fatal()
+	}
+	if list[1] != tohoku {
+		t.Fatal()
+	}
+	if list[2] != kanto {
+		t.Fatal()
+	}
+	if list[3] != chubu {
+		t.Fatal()
+	}
+	if list[4] != kansai {
+		t.Fatal()
+	}
+	if list[5] != chugoku {
+		t.Fatal()
+	}
+	if list[6] != shikoku {
+		t.Fatal()
+	}
+	if list[7] != kyushu {
+		t.Fatal()
+	}
+}
+
 func TestFindByCode(t *testing.T) {
 	var (
 		prefecture Prefecture
