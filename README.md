@@ -35,10 +35,13 @@ prefInfo, ok = pref.FindByCode(1)
 if !ok {
 	log.Print("prefecture not found.")
 } else {
-	log.Print(prefInfo.Code())  // 都道府県コード
-	log.Print(prefInfo.Kanji()) // 都道府県名（漢字）
-	log.Print(prefInfo.Kana())  // 都道府県名（かな）
-	log.Print(prefInfo.Roma())  // 都道府県名（ローマ字）
+	log.Print(prefInfo.Code())       // 都道府県コード
+	log.Print(prefInfo.Kanji())      // 都道府県名（漢字：末尾の「都」、「府」、「県」を除外）
+	log.Print(prefInfo.KanjiShort()) // 都道府県名（漢字）
+	log.Print(prefInfo.Kana())       // 都道府県名（かな）
+	log.Print(prefInfo.KanaShort())  // 都道府県名（かな：末尾の「と」、「ふ」、「けん」を除外）
+	log.Print(prefInfo.Roma())       // 都道府県名（ローマ字）
+	log.Print(prefInfo.RomaShort())  // 都道府県名（ローマ字：末尾の「-to」、「-fu」、「-ken」を除外）
 }
 
 // 漢字名検索では末尾の「都」、「府」、「県」は省略して検索できます。
@@ -54,5 +57,19 @@ prefInfo, ok = pref.FindByKana("とうきょう")
 prefInfo, ok = pref.FindByRoma("tokyo")
 
 // List関数は全ての都道府県リストを返します。
-prefInfo := pref.List()
+prefs := pref.List()
+
+// RegionList関数は地域のリストを返します。
+// 各地域はRegionインターフェースとして返されます。
+regions := pref.RegionList()
+
+for _, region := range regions {
+	// RegionインターフェースはPrefectureインターフェースと同様に、漢字名、かな名、ローマ字名を取得することが出来ます。
+	region.Kanji()
+	region.Kana()
+	region.Roma()
+
+	// RegionインターフェースはListメソッドを呼ぶことで、その地域に所属する都道府県リストを取得することが出来ます。
+	prefs := region.List()
+}
 ```
